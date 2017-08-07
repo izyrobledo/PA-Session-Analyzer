@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html>
-<body>
-
-<p> this worked </p>
-    <div id="content">
-        Hello <strong>{{ssid}}</strong> ({{choice}})! + {{env}}
-     </div>
-</body>
+<head>
+        <title>Response Page from /hello/Isabella</title>
+    </head>
+    <body>
+        <div id="container">
+            <div class="title">
+                <h1>POST request with Flask</h1>
+            </div>
+            <div id="content">
+                Session ID : <strong>{{ssid}}</strong> on <strong>{{environment}}</strong> User Choice: {{choice}}!
+            </div>
+            <div class="title">
+                <h1>Email:</h1>
+                <div id="suckmyass">
+                    {{email}}
+                </div>
+            </div>
+            </div>
+    </body>
 </html>
 
