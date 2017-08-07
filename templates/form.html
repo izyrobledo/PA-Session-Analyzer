@@ -4,17 +4,22 @@
 
 <form action="/hello/Isabella/response/" method = "post">
   Would you like to get all the information from one ssid (enter 1), or would you like to query an environment?:<br>
-  <input type="text" userChoice="userChoice">
+  <input type="text" name="userChoice">
   <br>
   Enter which environment you would like to work in (dev, qa, or ct):
   <br>
-  <input type="text" env="env">
+  <input type="text" name="env">
   <br>
-  Which ssids would you like information on? Enter each ssid seperated by a space: 
-  <input type="text" string_input="string_input">
+  Which ssids would you like information on? Enter each ssid seperated by a space:
+  <input type="text" name="SSID" string_input="string_input">
   <br><br>
+
+  <label for="youremail">Please enter your email:</label>
+                  <input type="text" name="youremail" /><br />
+
+
   <input type="submit" value="Submit">
-</form> 
+</form>
 
 </body>
 </html>
