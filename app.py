@@ -18,7 +18,13 @@ def members():
 def hello():
     return render_template(
         'form.html')
+    
 
+@app.route("/hello/Isabella/response/", methods = ["GET", "POST"])
+def response():
+	userChoice = request.form
+	return render_template(
+		'response.html')
  
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=80)
