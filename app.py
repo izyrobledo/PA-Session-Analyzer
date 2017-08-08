@@ -1,4 +1,5 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
+import get_AWSInfo
 app = Flask(__name__)
 
 @app.route("/")
@@ -22,24 +23,20 @@ def hello():
 
 @app.route("/hello/Isabella/response/", methods = ["GET", "POST"])
 def response():
-<<<<<<< HEAD
-	userChoice = request.form
-	return render_template(
-		'response.html')
- 
-=======
+
     choice=request.form['userChoice']
     environment=request.form['env']
     ssid=request.form['SSID']
-    email=request.form['youremail']
-    return render_template('response.html', choice=choice, environment=environment, ssid=ssid, email=email)
+
+    ## call the backend python script
 
 
->>>>>>> ca27e9cb1218f6dd373bb46b6c47d083c22e9143
+    return render_template('response.html', choice=choice, environment=environment, ssid=ssid)
+
+
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=80)
     app.run()
-
 
 
 
