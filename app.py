@@ -19,10 +19,11 @@ def members():
 def hello():
     return render_template(
         'form.html')
-    
+
 
 @app.route("/hello/Isabella/response/", methods = ["GET", "POST"])
 def response():
+<<<<<<< HEAD
 
     choice=request.form['userChoice']
     environment=request.form['env']
@@ -34,6 +35,15 @@ def response():
     return render_template('response.html', choice=choice, environment=environment, ssid=ssid)
 
 
+=======
+    choice=request.form['userChoice']
+    environment=request.form['env']
+    ssid=request.form['SSID']
+    email=request.form['youremail']
+    import get_AWSInfo.py
+    return render_template('response.html', choice=choice, environment=environment, ssid=ssid, email=email)
+
+>>>>>>> 407d98d955587db172eaea8a0a77cc40b8fb79b5
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=80)
     app.run()
