@@ -1,2 +1,0 @@
-modelYear, makeDesc, displayModel, trimLevel, odometerReading, ownerZip, primaryImpactCode, airbagDeployed, drivable, uploadClaims, sessionCreateTs, carrierId, estimate
-2007, Jeep, Patriot, Limited, NA, 60652, NA, No, Yes, true, 2017-08-01 18:53:06, SDKT, NA

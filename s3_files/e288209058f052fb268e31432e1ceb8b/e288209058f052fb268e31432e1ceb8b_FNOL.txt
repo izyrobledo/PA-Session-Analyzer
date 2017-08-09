@@ -1,2 +1,2 @@
 modelYear, makeDesc, displayModel, trimLevel, odometerReading, ownerZip, primaryImpactCode, airbagDeployed, drivable, uploadClaims, sessionCreateTs, carrierId, estimate
-2015, Toyota, Corolla, LE, NA, 60652, NA, No, Yes, true, 2017-07-28 20:20:24, SDKT, NA
+2007, Toyota, Camry, CE, NA, 78759, NA, No, Yes, false, 2017-07-16 14:45:54, MIKE, NA
