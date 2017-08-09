@@ -39,8 +39,7 @@ def response():
     environment=request.form['env']
     ssid=request.form['SSID']
 
-    path = request.form['path']
-
+    path = '/Users/isabella/Documents/workspace/pasessionanalyzer'
     aws = get_AWSInfo(choice, environment, ssid, path)
 
     aws.defineEnvironments()

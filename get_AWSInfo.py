@@ -84,9 +84,9 @@ class get_AWSInfo:
                 if (debug): print "\theatmap name --> ", heatmap_name
                 if (heatmap_name[-4:] != '.jpg'):
                     heatmap_name = heatmap_name + '.jpg'
-                heatmap_image = s3.Object(self.s3_heatmap_bucket, heatmap_name) # ('bucket_name', 'key')
+                heatmap_image = s3.Object(self.s3_heatmap_bucket, str(heatmap_name)) # ('bucket_name', 'key')
                 if (debug): print "\theatmap_image --> "+ str(heatmap_image)
-                self.FNOL_heatmaps_list.append(str(heatmap_image))
+                self.FNOL_heatmaps_list.append(heatmap_image)
                 #heatmap_image.download_file(self.d.nitro_heatmaps_dir + heatmap_name 
                 #if (debug): print '\tnitro_heatmaps_dir --> ', self.d.nitro_heatmaps_dir
                 print 'heatmaps list: '+ self.FNOL_heatmaps_list
