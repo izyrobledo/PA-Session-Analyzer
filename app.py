@@ -52,7 +52,7 @@ def response():
     if (choice == '1'):
         print 'choice is 1'
         aws.goThroughSSIDS(dynamodb, s3, table)
-    elif (choice == 2):
+    elif (choice == '2'):
         aws.getSSIDsInRange()
 
     return render_template('Responsev2.html', choice=choice, environment=environment, ssid=ssid)

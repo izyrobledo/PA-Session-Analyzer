@@ -55,7 +55,7 @@
                    <br><br>
                 <input type="text" name="SSID">
                 <br><br>
-                
+
                 <input type="submit" value="Submit">
                </form>
 
@@ -65,9 +65,18 @@
 
       <div class="column-5 w-col w-col-6">
 
-        <div class="div-block" data-ix="slow-rise" style="visibility: hidden; opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
+        <div class="div-block" data-ix="slow-rise" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
           <h1 class="heading-1 mod-1">This is the one on the Right</h1>
           <p class="paragraph">RIGHT MESSAGE.</p>
+
+        </div>
+        <div class="div-block" data-ix="slow-rise" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
+          <h1 class="heading-1 mod-1">Images go here plz</h1>
+          <p class="paragraph">Dank Memes</p>
+          <img src="{{ url_for('static', filename = 'Icon-1.png') }}" alt="Picture 1" height="100" width="100">
+          <img src="{{ url_for('static', filename = 'Icon-2.png') }}" alt="Picture 2" height="100" width="100">
+          <img src="{{ url_for('static', filename = 'Icon-3.png') }}" alt="Picture 3" height="100" width="100">
+
 
         </div>
       </div>
