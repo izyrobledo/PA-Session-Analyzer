@@ -1,2 +1,0 @@
-modelYear, makeDesc, displayModel, trimLevel, odometerReading, ownerZip, primaryImpactCode, airbagDeployed, drivable, uploadClaims, sessionCreateTs, carrierId, estimate
-2007, Toyota, Camry, CE, NA, 78759, NA, No, Yes, false, 2017-07-16 14:45:54, MIKE, NA

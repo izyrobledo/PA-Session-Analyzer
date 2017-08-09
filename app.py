@@ -39,7 +39,8 @@ def response():
     environment=request.form['env']
     ssid=request.form['SSID']
 
-    path = '/Users/isabella/Documents/workspace/pasessionanalyzer'
+    path = os.getcwd()
+    # '/Users/isabella/Documents/workspace/pasessionanalyzer'
     aws = get_AWSInfo(choice, environment, ssid, path) # <-- get all these variables
 
     aws.defineEnvironments() # <-- define environment variables
@@ -55,6 +56,8 @@ def response():
 
 
         for ssid in aws.list_ssids:
+            # if not os.path.exists(self.directory):
+            #     os.makedirs(self.directory)
             print "\n"
             aws.d.makeDirs('/s3_files/', path, ssid)
             # dynamodb = boto3.resource('dynamodb', e.region_name)

@@ -64,6 +64,15 @@ class get_AWSInfo:
              image = s3.Object(self.s3_image_bucket, str(img_name )) # makes an s3 object (if I understand correctly) 
              #if (debug): print '\timage --> ', image
              #image.download_file(self.d.input_dir + img_name) # downloads the file from s3 
+             print self.d.input_dir + img_name
+             print 'sys.argv[0]'
+             print os.getcwd()
+             print os.getcwd() +"/"+ img_name
+             p = os.getcwd() +"/"+ img_name
+             #image.download_file(p) # downloads the file from s3
+             
+             #print sys.argv[0]
+
              link_to_image  = self.s3_link_to_inputImages + img_name
              
              self.FNOL_inputImage_list.append(link_to_image)

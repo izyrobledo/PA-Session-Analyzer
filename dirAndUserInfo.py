@@ -35,7 +35,7 @@ class dirAndUserInfo:
 
     def makeDirs(self, master_dir, path, ssid):
 
-        self.directory = path + master_dir + ssid #path to 'new' file s3_files(master_dir) and another file within that is the ssid file
+        self.directory = os.getcwd() + '/s3_files/' + ssid #path to 'new' file s3_files(master_dir) and another file within that is the ssid file
         self.input_dir = self.directory + '/Input/' #path to '/Input' file within the ssid file
         self.nitro_heatmaps_dir = self.directory + '/Nitro_Heatmaps/' #path to '/Nitro_Heatmaps' file within the ssid file
         self.zip_input_dir = path + master_dir #path to input zip inside of s3_files
