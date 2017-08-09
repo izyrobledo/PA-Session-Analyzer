@@ -65,16 +65,24 @@
       </div>
 
       <div class="column-5 w-col w-col-6">
-
         <div class="div-block" data-ix="slow-rise" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
-          <h1 class="heading-1 mod-1">Your Information Shows up Here</h1>
-          <p class="paragraph">And maybe images pop up below?
-          <br><div id="content">
-                Session ID : <strong>{{ssid}}</strong> on <strong>{{environment}}</strong> User Choice: {{choice}}!
-            </div></p>
+          <h1 class="heading-1 mod-1">This is the one on the Right</h1>
+          <p class="paragraph">RIGHT MESSAGE.</p>
 
         </div>
-      </div>
+        <div class="div-block" data-ix="slow-rise" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
+          <h1 class="heading-1 mod-1">Images go here plz</h1>
+          <p class="paragraph">Dank Memes</p>
+            
+            <!-- This will Not WORK 
+                {% for item in session.pop('input_images', []) %}
+                    <img src="{{item}}" alt="Picture 1" height="100" width="100">
+                {% endfor %} -->
+
+          <img src="{{item}}" alt="Picture 1" height="100" width="100">
+        </div>
+        
+      </div> <!-- here -->
     </div>
   </div>
   <div class="footer"></div>

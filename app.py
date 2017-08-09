@@ -43,7 +43,7 @@ def response():
     aws = get_AWSInfo(choice, environment, ssid, path) # <-- get all these variables
 
     aws.defineEnvironments() # <-- define environment variables
-    
+
 
     dynamodb = boto3.resource('dynamodb', aws.region_name)
     s3 = boto3.resource('s3')
@@ -54,7 +54,7 @@ def response():
         #aws.goThroughSSIDS(dynamodb, s3, table)
 
 
-        for ssid in aws.list_ssids: 
+        for ssid in aws.list_ssids:
             print "\n"
             aws.d.makeDirs('/s3_files/', path, ssid)
             # dynamodb = boto3.resource('dynamodb', e.region_name)
@@ -74,7 +74,8 @@ def response():
     elif (choice == '2'):
         aws.getSSIDsInRange()
 
-    return render_template('Responsev2.html', choice=choice, environment=environment, ssid=ssid, input_images=input_images, heatmaps=heatmaps)
+
+    return render_template('Responsev2.html', choice=choice, environment=environment, ssid=ssid)
 
 
 
