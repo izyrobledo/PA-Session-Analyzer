@@ -1,0 +1,2 @@
+modelYear, makeDesc, displayModel, trimLevel, odometerReading, ownerZip, primaryImpactCode, airbagDeployed, drivable, uploadClaims, sessionCreateTs, carrierId, estimate
+NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
