@@ -1,0 +1,2 @@
+modelYear, makeDesc, displayModel, trimLevel, odometerReading, ownerZip, primaryImpactCode, airbagDeployed, drivable, uploadClaims, sessionCreateTs, carrierId, estimate
+NA, NA, NA, NA, NA, NA, NA, NA, NA, false, 2017-06-22 14:36:39, LM, NA

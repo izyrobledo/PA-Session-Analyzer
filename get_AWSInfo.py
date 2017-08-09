@@ -18,6 +18,8 @@ class get_AWSInfo:
     s3_image_bucket = ''
     s3_heatmap_bucket = ''
     region_name = ''
+    s3_link_to_inputImages = ''
+    s3_link_to_heatmaps = ''
     d = ''
 
     input_images_list = ['']
@@ -48,23 +50,28 @@ class get_AWSInfo:
     def accessInputImages(self, response, s3):
         debug = True
         # get input images for a specific ssid
+        
         try: 
+            count = 0
             for individual_images in response['Items'][0]['input_images']: 
-             
-             if (debug): print "individual_images --> ", individual_images # prints the entire row for that particular image
-             img_name = individual_images['image_name'] #  gets the name of the image from that row
+                    
+             #if (debug): print "individual_images --> ", individual_images # prints the entire row for that particular image
+             img_name = str(individual_images['image_name']) #  gets the name of the image from that row
              if (img_name[-4:] != '.jpg'):
                 img_name = img_name + '.jpg'
-
-             if (debug): print "\timage name --> ", img_name # prints name
+                
+             #if (debug): print "\timage name --> ", img_name # prints name
              image = s3.Object(self.s3_image_bucket, str(img_name )) # makes an s3 object (if I understand correctly) 
-             if (debug): print '\timage --> ', image
-             print 'input dir + img_name --> ', self.d.input_dir +" !!!!! " + img_name + '.jpg'
+             #if (debug): print '\timage --> ', image
              #image.download_file(self.d.input_dir + img_name) # downloads the file from s3 
+             link_to_image  = self.s3_link_to_inputImages + img_name
+             print link_to_image
+             
              self.FNOL_inputImage_list.append(image)
-             print 'FNOL_list !!!!'
-             print self.FNOL_inputImage_list
-             if debug: print '\tinput_dir (image has been DOWNLOADED) --> ', self.d.input_dir
+             #if (debug): print "\tFNOL_list: ", self.FNOL_inputImage_list
+             count = count + 1
+             if (debug): print 'count: ', count
+             
             if debug: print 'This ssid has the appropriate input images, they have been downloaded to', self.d.input_dir
 
              #print 'list: '+ (self.FNOL_list)
@@ -74,22 +81,25 @@ class get_AWSInfo:
 
     def accessHeatMaps(self,response, s3):
         debug = True
-        
+        if (debug): print 'heat maps'
         try:
+            count = 0
             for individual_heatmaps in response['Items'][0]['heat_maps']:
-                print '\n\n'
-                print 'INSIDE FOR !!!!!!!!!!!!!!!!!!!!!!!!!!!'
-                if (debug): print "individual heatmaps --> ", individual_heatmaps
+                #if (debug): print "individual heatmaps --> ", individual_heatmaps
                 heatmap_name = str(individual_heatmaps['file_name'])
-                if (debug): print "\theatmap name --> ", heatmap_name
+                #if (debug): print "\theatmap name --> ", heatmap_name
                 if (heatmap_name[-4:] != '.jpg'):
                     heatmap_name = heatmap_name + '.jpg'
                 heatmap_image = s3.Object(self.s3_heatmap_bucket, str(heatmap_name)) # ('bucket_name', 'key')
-                if (debug): print "\theatmap_image --> "+ str(heatmap_image)
+                #if (debug): print "\theatmap_image --> ", str(heatmap_image)
+                link_to_heatmap = self.s3_link_to_heatmaps + heatmap_name
+                print link_to_heatmap
                 self.FNOL_heatmaps_list.append(heatmap_image)
                 #heatmap_image.download_file(self.d.nitro_heatmaps_dir + heatmap_name 
                 #if (debug): print '\tnitro_heatmaps_dir --> ', self.d.nitro_heatmaps_dir
-                print 'heatmaps list: '+ self.FNOL_heatmaps_list
+                #if (debug): print 'heatmaps list: ', self.FNOL_heatmaps_list
+                count = count + 1
+                if (debug): print 'count: ', count
             #print 'This ssid has the appropriate heatmaps, they have been downloaded to', self.d.nitro_heatmaps_dir
         except:
             print 'This ssid does not have the relevant heatmap images'
@@ -135,7 +145,8 @@ class get_AWSInfo:
             self.s3_image_bucket = 'pa_validation-input-ct'
             self.s3_heatmap_bucket = 'pa_heatmap_output-ct'
             self.region_name = 'us-west-2'
-
+            self.s3_link_to_inputImages = 'https://s3.amazonaws.com/pa-validation-input-ct/'
+            self.s3_link_to_heatmaps = 'https://s3.amazonaws.com/pa-heatmap-output-ct/'
             # 45c95fad36838e24a046e7dde0f56655 94ac394ccc50bf2234c59e5e328e4d8d ca9a66875968feb1d595cf14eca3268a
         elif self.env == 'qa':
             #e = AWSEnvironment('pa1001_session', 'pa-validation-input-qa', 'pa-heatmap-output-qa', 'us-east-1')
@@ -143,6 +154,9 @@ class get_AWSInfo:
             self.s3_image_bucket = 'pa_validation-input-qa'
             self.s3_heatmap_bucket = 'pa_heatmap_output-qa'
             self.region_name = 'us-east-1'
+            self.s3_link_to_inputImages = 'https://s3-us-west-2.amazonaws.com/pa-validation-input-qa/'
+            self.s3_link_to_heatmaps = 'https://s3-us-west-2.amazonaws.com/pa-heatmap-output-qa/'
+
             # ['38cf96644bf96a4203a33ce811a1aec2']
         elif self.env == 'dev':
 
@@ -151,6 +165,8 @@ class get_AWSInfo:
             self.s3_image_bucket = 'pa_validation-input'
             self.s3_heatmap_bucket = 'pa_heatmap_output'
             self.region_name = 'us-west-2'
+            self.s3_link_to_inputImages = 'https://s3-us-west-2.amazonaws.com/pa-validation-input/'
+            self.s3_link_to_heatmaps = 'https://s3-us-west-2.amazonaws.com/pa-heatmap-output/'
 
         print 'region name inside of get_AWSInfo: '+ self.region_name
             # e288209058f052fb268e31432e1ceb8b 4d5553375cf049a3295a769b3681facf df29e781b15bb6fa45c875cebf487387

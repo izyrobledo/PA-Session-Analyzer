@@ -1,6 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
 from get_AWSInfo import get_AWSInfo
-
+from flask_s3 import FlaskS3
 import sys, os
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
