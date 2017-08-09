@@ -65,9 +65,8 @@ class get_AWSInfo:
              #if (debug): print '\timage --> ', image
              #image.download_file(self.d.input_dir + img_name) # downloads the file from s3 
              link_to_image  = self.s3_link_to_inputImages + img_name
-             print link_to_image
              
-             self.FNOL_inputImage_list.append(image)
+             self.FNOL_inputImage_list.append(link_to_image)
              #if (debug): print "\tFNOL_list: ", self.FNOL_inputImage_list
              count = count + 1
              if (debug): print 'count: ', count
@@ -78,6 +77,8 @@ class get_AWSInfo:
             
         except: 
           print 'This ssid does not have the relevant input images'
+          
+        return self.FNOL_inputImage_list
 
     def accessHeatMaps(self,response, s3):
         debug = True
@@ -94,7 +95,7 @@ class get_AWSInfo:
                 #if (debug): print "\theatmap_image --> ", str(heatmap_image)
                 link_to_heatmap = self.s3_link_to_heatmaps + heatmap_name
                 print link_to_heatmap
-                self.FNOL_heatmaps_list.append(heatmap_image)
+                self.FNOL_heatmaps_list.append(link_to_heatmap)
                 #heatmap_image.download_file(self.d.nitro_heatmaps_dir + heatmap_name 
                 #if (debug): print '\tnitro_heatmaps_dir --> ', self.d.nitro_heatmaps_dir
                 #if (debug): print 'heatmaps list: ', self.FNOL_heatmaps_list
@@ -103,6 +104,7 @@ class get_AWSInfo:
             #print 'This ssid has the appropriate heatmaps, they have been downloaded to', self.d.nitro_heatmaps_dir
         except:
             print 'This ssid does not have the relevant heatmap images'
+        return self.FNOL_heatmaps_list
 
     def accessAdditionalInfo(self, response, ssid):
 

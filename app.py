@@ -40,10 +40,10 @@ def response():
     ssid=request.form['SSID']
 
     path = '/Users/isabella/Documents/workspace/pasessionanalyzer'
-    aws = get_AWSInfo(choice, environment, ssid, path)
+    aws = get_AWSInfo(choice, environment, ssid, path) # <-- get all these variables
 
-    aws.defineEnvironments()
-    print 'region name !!!!!: '+ aws.region_name
+    aws.defineEnvironments() # <-- define environment variables
+    
 
     dynamodb = boto3.resource('dynamodb', aws.region_name)
     s3 = boto3.resource('s3')
@@ -51,11 +51,30 @@ def response():
 
     if (choice == '1'):
         print 'choice is 1'
-        aws.goThroughSSIDS(dynamodb, s3, table)
+        #aws.goThroughSSIDS(dynamodb, s3, table)
+
+
+        for ssid in aws.list_ssids: 
+            print "\n"
+            aws.d.makeDirs('/s3_files/', path, ssid)
+            # dynamodb = boto3.resource('dynamodb', e.region_name)
+            # s3 = boto3.resource('s3')
+            # table = dynamodb.Table(e.session_table)
+            response = table.query(
+              KeyConditionExpression=Key('ssid').eq(ssid)
+            )
+            print "SSID: ", ssid
+            input_images = aws.accessInputImages(response, s3)
+            heatmaps = aws.accessHeatMaps(response, s3)
+            aws.accessAdditionalInfo(response, ssid)
+
+
+
+
     elif (choice == '2'):
         aws.getSSIDsInRange()
 
-    return render_template('Responsev2.html', choice=choice, environment=environment, ssid=ssid)
+    return render_template('Responsev2.html', choice=choice, environment=environment, ssid=ssid, input_images=input_images, heatmaps=heatmaps)
 
 
 
