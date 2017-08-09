@@ -73,9 +73,14 @@ def response():
 
     elif (choice == '2'):
         aws.getSSIDsInRange()
+<<<<<<< HEAD
 
 
     return render_template('Responsev2.html', choice=choice, environment=environment, ssid=ssid)
+=======
+    #session['input_images'] = input_images
+    return render_template('Responsev2.html', choice=choice, environment=environment, ssid=ssid, input_images = input_images)
+>>>>>>> fc8ea2601f00b7f07da3eb90fd3a92cc1cbb3720
 
 
 
