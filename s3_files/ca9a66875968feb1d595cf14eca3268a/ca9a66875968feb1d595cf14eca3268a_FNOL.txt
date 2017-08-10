@@ -1,2 +1,0 @@
-modelYear, makeDesc, displayModel, trimLevel, odometerReading, ownerZip, primaryImpactCode, airbagDeployed, drivable, uploadClaims, sessionCreateTs, carrierId, estimate
-2012, Nissan, Altima, S, NA, 94538, NA, No, Yes, false, 2017-03-15 20:18:00, AL, NA

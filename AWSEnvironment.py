@@ -16,5 +16,3 @@ class AWSEnvironment:
 	def listSSIDInfo(self, session_list):
 		self.session_list = session_list
 	# more stuff
-
-	

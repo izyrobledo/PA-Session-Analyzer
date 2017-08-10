@@ -1,2 +1,0 @@
-modelYear, makeDesc, displayModel, trimLevel, odometerReading, ownerZip, primaryImpactCode, airbagDeployed, drivable, uploadClaims, sessionCreateTs, carrierId, estimate
-2011, Ford, Fusion, SEL, NA, 78759, NA, NA, NA, false, 2017-02-16 15:00:19, HAWK, NA
