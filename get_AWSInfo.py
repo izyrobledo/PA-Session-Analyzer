@@ -43,32 +43,34 @@ class get_AWSInfo:
         
         self.env = env
         self.path = path
+        self.defineEnvironments()
+        self.d = dirAndUserInfo()
 
 
-    def goThroughSSIDS(self, dynamodb, s3, table):
-        print self.session_list
-        for ssid in self.session_list: 
-            print "\n"
-            self.d.makeDirs('/s3_files/', self.path, ssid)
-            # dynamodb = boto3.resource('dynamodb', e.region_name)
-            # s3 = boto3.resource('s3')
-            # table = dynamodb.Table(e.session_table)
+    # def goThroughSSIDS(self, dynamodb, s3, table):
+    
+    #     for ssid in self.session_list: 
+    #         print "\n"
+    #         self.d.makeDirs('/s3_files/', self.path, ssid)
+    #         # dynamodb = boto3.resource('dynamodb', e.region_name)
+    #         # s3 = boto3.resource('s3')
+    #         # table = dynamodb.Table(e.session_table)
             
-            response = table.query(
-                KeyConditionExpression=Key('ssid').eq(ssid)
-            )
+    #         response = table.query(
+    #             KeyConditionExpression=Key('ssid').eq(ssid)
+    #         )
             
-            print "SSID: ", ssid
-            self.accessInputImages(response, s3)
-            self.accessHeatMaps(response, s3)
-            self.accessAdditionalInfo(response, ssid)
+    #         print "SSID: ", ssid
+    #         self.accessInputImages(response, s3)
+    #         self.accessHeatMaps(response, s3)
+    #         self.accessAdditionalInfo(response, ssid)
      
-        self.d.zipEverything()
+    #     #self.d.zipEverything()
 
 
     def accessInputImages(self,response, s3):
-        debug = True
-        print 'access input images'
+        debug = False
+        img_names = ['']
         # get input images for a specific ssid
         try: 
            for individual_images in response['Items'][0]['input_images']: 
@@ -76,23 +78,22 @@ class get_AWSInfo:
              if (debug): print "individual_images --> ", individual_images # prints the entire row for that particular image
              img_name = individual_images['image_name'] #  gets the name of the image from that row
              if (img_name[-4:] != '.jpg'):
-                if (debug): print "before:", img_name
                 img_name = img_name + '.jpg'
-                if (debug): print "after:", img_name
-
+             img_names.append(img_name)
              if (debug): print "\timage name --> ", img_name # prints name
              image = s3.Object(self.s3_image_bucket, str(img_name )) # makes an s3 object (if I understand correctly) 
-             if (debug): print '\timage --> ', image
-             print 'input dir + img_name --> ', self.d.input_dir +" !!!!! " + img_name + '.jpg'
-             image.download_file(self.d.input_dir + img_name) # downloads the file from s3 
-
-             if debug: print '\tinput_dir (image has been DOWNLOADED) --> ', self.d.input_dir
-             print 'This ssid has the appropriate input images, they have been downloaded to', self.d.input_dir
+             
+             #image.download_file(self.d.input_dir + img_name) # downloads the file from s3 
+             image.download_file(self.d.directory + img_name)
+             
+             print 'This ssid has the appropriate input images, they have been downloaded to', self.d.directory
         except: 
           print 'This ssid does not have the relevant input images'
 
+        return img_names
+
     def accessHeatMaps(self, response, s3):
-        debug = True
+        debug = False
         try:
             for individual_heatmaps in response['Items'][0]['heat_maps']:
                 if (debug): print "individual heatmaps --> ", individual_heatmaps
@@ -100,9 +101,11 @@ class get_AWSInfo:
                 if (debug): print "\theatmap name --> ", heatmap_name
                 heatmap_image = s3.Object(self.s3_heatmap_bucket, heatmap_name) # ('bucket_name', 'key')
                 if (debug): print "\theatmap_image --> ", str(heatmap_image)
-                heatmap_image.download_file(self.d.nitro_heatmaps_dir + heatmap_name )
-                if (debug): print '\tnitro_heatmaps_dir --> ', self.d.nitro_heatmaps_dir
-            print 'This ssid has the appropriate heatmaps, they have been downloaded to', self.d.nitro_heatmaps_dir
+                #heatmap_image.download_file(self.d.nitro_heatmaps_dir + heatmap_name )
+                heatmap_image.download_file(self.d.directory + heatmap_name )
+                
+
+            print 'This ssid has the appropriate heatmaps, they have been downloaded to', self.d.directory
         except:
             print 'This ssid does not have the relevant heatmap images'
 
@@ -196,31 +199,9 @@ class get_AWSInfo:
             print "ssid: "+ssid['ssid'] +", sessionCreateTs: "+ssid['sessionCreateTs']
             #print '\n'
 
-    def mainMethod1(self, ssids):
-        print 'main method'
-        self.d = dirAndUserInfo()
-        print '6'
-        #d.getUserInput()
-        
-        session = boto3.Session(profile_name = 'default')
-        print '7'
-        path = '/Users/isabella/Documents/pasessionanalyzer'
-        debug = True
+    def choice1(self, ssids):
 
-        self.defineEnvironments()
+        self.session_list = ssids.split()
 
-        print '8'
-
-        dynamodb = boto3.resource('dynamodb', self.region_name)
-        print '9'
-        s3 = boto3.resource('s3')
-        table = dynamodb.Table(self.session_table)
-
-        if (self.choice == '1'):
-            print 'insideif'
-            self.session_list = ssids.split()
-            self.goThroughSSIDS(dynamodb, s3, table)
-            return self.session_list
-            
-        # elif (self.choice == 2):
-        #     getSSIDsInRange()
+        return self.session_list
+ 

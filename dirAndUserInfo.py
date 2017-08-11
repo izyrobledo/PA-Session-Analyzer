@@ -35,18 +35,22 @@ class dirAndUserInfo:
 
     def makeDirs(self, master_dir, path, ssid):
 
-        self.directory = path + master_dir + ssid #path to 'new' file s3_files(master_dir) and another file within that is the ssid file
-        self.input_dir = self.directory + '/Input/' #path to '/Input' file within the ssid file
-        self.nitro_heatmaps_dir = self.directory + '/Nitro_Heatmaps/' #path to '/Nitro_Heatmaps' file within the ssid file
-        self.zip_input_dir = path + master_dir #path to input zip inside of s3_files
-        self.zip_output_dir = path + '/s3_zip/' #path to zip located where the code is
+        # self.directory = path + master_dir + ssid #path to 'new' file s3_files(master_dir) and another file within that is the ssid file
+        # self.input_dir = self.directory + '/Input/' #path to '/Input' file within the ssid file
+        # self.nitro_heatmaps_dir = self.directory + '/Nitro_Heatmaps/' #path to '/Nitro_Heatmaps' file within the ssid file
+        #self.zip_input_dir = path + master_dir #path to input zip inside of s3_files
+        #self.zip_output_dir = path + '/s3_zip/' #path to zip located where the code is
         
+        # if not os.path.exists(self.directory):
+        #     os.makedirs(self.directory)
+        # if not os.path.exists(self.input_dir):
+        #     os.makedirs(self.input_dir)
+        # if not os.path.exists(self.nitro_heatmaps_dir):
+        #     os.makedirs(self.nitro_heatmaps_dir)
+
+        self.directory = path + '/static/'
         if not os.path.exists(self.directory):
             os.makedirs(self.directory)
-        if not os.path.exists(self.input_dir):
-            os.makedirs(self.input_dir)
-        if not os.path.exists(self.nitro_heatmaps_dir):
-            os.makedirs(self.nitro_heatmaps_dir)
 
     def zipEverything(self):
         shutil.make_archive(self.zip_output_dir, 'zip', self.zip_input_dir)

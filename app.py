@@ -51,12 +51,46 @@ def response():
     aws = get_AWSInfo(choice, environment, path)
     print '4'
 
-    global sesssion_list
-    session_list = aws.mainMethod1(ssids)
-    print '5'
+    # global sesssion_list
+    # session_list = aws.mainMethod1(ssids)
+
+
+    session = boto3.Session(profile_name = 'default')
+       
+    dynamodb = boto3.resource('dynamodb', aws.region_name)
+    s3 = boto3.resource('s3')
+    table = dynamodb.Table(aws.session_table)
+
+    
+            
+    #aws.session_list = ssids.split()
+    session_list = aws.choice1(ssids)     
+
+    for ssid in aws.session_list: 
+        print "\n"
+        aws.d.makeDirs('/static/', aws.path, ssid)
+        # dynamodb = boto3.resource('dynamodb', e.region_name)
+        # s3 = boto3.resource('s3')
+        # table = dynamodb.Table(e.session_table)
+        
+        response = table.query(
+            KeyConditionExpression=Key('ssid').eq(ssid)
+        )
+        
+        print "SSID: ", ssid
+        img_names = aws.accessInputImages(response, s3)
+        aws.accessHeatMaps(response, s3)
+        aws.accessAdditionalInfo(response, ssid)
+
+    #aws.d.zipEverything()
+
+
+
+
+
 
     return render_template(
-        'response.html', choice=choice, environment=environment, session_list = session_list)
+        'response.html', choice=choice, environment=environment, session_list = session_list, img_names = img_names)
  
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=80)

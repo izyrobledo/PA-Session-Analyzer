@@ -12,9 +12,12 @@
                 Session IDs : <strong>{{session_list}}</strong> on <strong>{{environment}}</strong> User Choice: {{choice}}!
                 <br>
                 {% for ssid in session_list %}
-                    SSID: {{ssid}} <br>
-                    {% for image in }
-                    <img src = "{{url_for 's3_files/{{ssid}}/Input/', filename = 
+                    SSID: {{ssid}} 
+                    {% for img in img_names %}
+                        
+                        <img src ="{{ url_for('static', filename = img ) }}" alt="No Picture" height="100" width="100">
+                        img: {{img}} <br>
+                    {% endfor %}
                 {% endfor %}
             </div>
 
