@@ -220,5 +220,7 @@ class get_AWSInfo:
             print 'insideif'
             self.session_list = ssids.split()
             self.goThroughSSIDS(dynamodb, s3, table)
-        elif (self.choice == 2):
-            getSSIDsInRange()
+            return self.session_list
+            
+        # elif (self.choice == 2):
+        #     getSSIDsInRange()

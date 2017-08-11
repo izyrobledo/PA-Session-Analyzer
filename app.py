@@ -12,6 +12,9 @@ from AWSEnvironment import AWSEnvironment
 from dirAndUserInfo import dirAndUserInfo
 import time
 import datetime
+
+
+session_list = ['']
 app = Flask(__name__)
  
 @app.route("/")
@@ -43,15 +46,17 @@ def response():
     
 
 
-    path = '/Users/isabella/Documents/pasessionanalyzer'
+    #path = '/Users/isabella/Documents/pasessionanalyzer'
+    path = os.getcwd()
     aws = get_AWSInfo(choice, environment, path)
     print '4'
 
-    aws.mainMethod1(ssids)
+    global sesssion_list
+    session_list = aws.mainMethod1(ssids)
     print '5'
 
     return render_template(
-        'response.html', choice=choice, environment=environment, ssids=ssids)
+        'response.html', choice=choice, environment=environment, session_list = session_list)
  
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=80)

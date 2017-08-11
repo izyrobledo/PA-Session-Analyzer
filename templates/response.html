@@ -9,9 +9,20 @@
                 <h1>POST request with Flask</h1>
             </div>
             <div id="content">
-                Session ID : <strong>{{ssids}}</strong> on <strong>{{environment}}</strong> User Choice: {{choice}}!
+                Session IDs : <strong>{{session_list}}</strong> on <strong>{{environment}}</strong> User Choice: {{choice}}!
+                <br>
+                {% for ssid in session_list %}
+                    SSID: {{ssid}} <br>
+                    {% for image in }
+                    <img src = "{{url_for 's3_files/{{ssid}}/Input/', filename = 
+                {% endfor %}
             </div>
+
+
             <div class="title">
+
+            
+
                 
                 
             </div>
