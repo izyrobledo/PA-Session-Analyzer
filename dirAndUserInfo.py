@@ -18,13 +18,14 @@ class dirAndUserInfo:
     userChoice = ''
     env = ''
     list_ssids = ['']
+    debug = False
 
     def __init__(self):
         self.master_dir = '/s3_files/'
         
     def getUserInput(self):
         self.userChoice = input('Would you like to get all the information from one ssid (enter 1), or would you like to query an environment? (enter 2)')
-        print type (self.userChoice)
+        if (debug): print type (self.userChoice)
         if (self.userChoice == 1):
             self.env = raw_input('Enter which environment you would like to work in (dev, qa, or ct): ')
             string_input = raw_input('Which ssids would you like information on? Enter each ssid seperated by a space: ')

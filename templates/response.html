@@ -11,11 +11,12 @@
             <div id="content">
                 Session IDs : <strong>{{session_list}}</strong> on <strong>{{environment}}</strong> User Choice: {{choice}}!
                 <br>
+                
                 {% for ssid in session_list %}
-                    SSID: {{ssid}} 
+                    SSID: {{ssid}} <br>
                     {% for img in img_names %}
                         
-                        <img src ="{{ url_for('static', filename = img ) }}" alt="No Picture" height="100" width="100">
+                        <img src ="{{ url_for('static', filename = img ) }}" alt="Picture not found" height=15% width=15%>
                         img: {{img}} <br>
                     {% endfor %}
                 {% endfor %}

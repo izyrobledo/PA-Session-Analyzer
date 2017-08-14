@@ -35,21 +35,27 @@ def hello():
 
 
     return render_template(
-        'form.html')
+        'Formv2.html')
 
 @app.route("/form/response/", methods=["GET", "POST"])
 def response(): 
-
-    choice=request.form['userChoice']
+    print ' goes to response'
+    
     environment = request.form['env']
     ssids = request.form['SSID']
+    print 'got env and ssids'
+    choice=request.form['userChoice']
+    print 'got choice'
     
-
+    print 'this is the user choice: ' + choice
+    print type (choice)
+    if (choice == 1):
+        print 'THE PRINT STATEMENT WORKED'
 
     #path = '/Users/isabella/Documents/pasessionanalyzer'
     path = os.getcwd()
     aws = get_AWSInfo(choice, environment, path)
-    print '4'
+   
 
     # global sesssion_list
     # session_list = aws.mainMethod1(ssids)
@@ -67,7 +73,7 @@ def response():
     session_list = aws.choice1(ssids)     
 
     for ssid in aws.session_list: 
-        print "\n"
+       
         aws.d.makeDirs('/static/', aws.path, ssid)
         # dynamodb = boto3.resource('dynamodb', e.region_name)
         # s3 = boto3.resource('s3')
@@ -77,20 +83,15 @@ def response():
             KeyConditionExpression=Key('ssid').eq(ssid)
         )
         
-        print "SSID: ", ssid
+       
         img_names = aws.accessInputImages(response, s3)
-        aws.accessHeatMaps(response, s3)
+        hm_img_names = aws.accessHeatMaps(response, s3)
         aws.accessAdditionalInfo(response, ssid)
 
     #aws.d.zipEverything()
 
-
-
-
-
-
     return render_template(
-        'response.html', choice=choice, environment=environment, session_list = session_list, img_names = img_names)
+        'Responsev2.html', choice=choice, environment=environment, session_list = session_list, img_names = img_names, hm_img_names = hm_img_names)
  
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=80)

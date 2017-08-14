@@ -16,17 +16,17 @@ class get_AWSInfo:
 
     choice = ''
     env = ''
-    list_ssid = ['']
+    list_ssid = []
 
 
-    session_list = ['']
+    session_list = []
     session_table = ''
     s3_image_bucket = ''
     s3_heatmap_bucket = ''
     region_name = ''
 
 
-    session_list = ['']
+    session_list = []
     session_table = ''
     s3_image_bucket = ''
     s3_heatmap_bucket = ''
@@ -47,34 +47,12 @@ class get_AWSInfo:
         self.d = dirAndUserInfo()
 
 
-    # def goThroughSSIDS(self, dynamodb, s3, table):
-    
-    #     for ssid in self.session_list: 
-    #         print "\n"
-    #         self.d.makeDirs('/s3_files/', self.path, ssid)
-    #         # dynamodb = boto3.resource('dynamodb', e.region_name)
-    #         # s3 = boto3.resource('s3')
-    #         # table = dynamodb.Table(e.session_table)
-            
-    #         response = table.query(
-    #             KeyConditionExpression=Key('ssid').eq(ssid)
-    #         )
-            
-    #         print "SSID: ", ssid
-    #         self.accessInputImages(response, s3)
-    #         self.accessHeatMaps(response, s3)
-    #         self.accessAdditionalInfo(response, ssid)
-     
-    #     #self.d.zipEverything()
-
-
     def accessInputImages(self,response, s3):
         debug = False
-        img_names = ['']
+        img_names = []
         # get input images for a specific ssid
         try: 
            for individual_images in response['Items'][0]['input_images']: 
-             #print "response['Items'][0]['input_images'] --> ", response['Items'][0]['input_images'
              if (debug): print "individual_images --> ", individual_images # prints the entire row for that particular image
              img_name = individual_images['image_name'] #  gets the name of the image from that row
              if (img_name[-4:] != '.jpg'):
@@ -83,31 +61,33 @@ class get_AWSInfo:
              if (debug): print "\timage name --> ", img_name # prints name
              image = s3.Object(self.s3_image_bucket, str(img_name )) # makes an s3 object (if I understand correctly) 
              
-             #image.download_file(self.d.input_dir + img_name) # downloads the file from s3 
              image.download_file(self.d.directory + img_name)
              
-             print 'This ssid has the appropriate input images, they have been downloaded to', self.d.directory
+             if (debug): print 'This ssid has the appropriate input images, they have been downloaded to', self.d.directory
         except: 
-          print 'This ssid does not have the relevant input images'
+          if (debug): print 'This ssid does not have the relevant input images'
 
         return img_names
 
     def accessHeatMaps(self, response, s3):
         debug = False
+        hm_img_names = []
         try:
             for individual_heatmaps in response['Items'][0]['heat_maps']:
                 if (debug): print "individual heatmaps --> ", individual_heatmaps
                 heatmap_name = str(individual_heatmaps['file_name'])
                 if (debug): print "\theatmap name --> ", heatmap_name
+                hm_img_names.append(heatmap_name)
                 heatmap_image = s3.Object(self.s3_heatmap_bucket, heatmap_name) # ('bucket_name', 'key')
                 if (debug): print "\theatmap_image --> ", str(heatmap_image)
                 #heatmap_image.download_file(self.d.nitro_heatmaps_dir + heatmap_name )
                 heatmap_image.download_file(self.d.directory + heatmap_name )
                 
 
-            print 'This ssid has the appropriate heatmaps, they have been downloaded to', self.d.directory
+            if (debug): print 'This ssid has the appropriate heatmaps, they have been downloaded to', self.d.directory
         except:
-            print 'This ssid does not have the relevant heatmap images'
+            if (debug): print 'This ssid does not have the relevant heatmap images'
+        return hm_img_names
 
     def accessAdditionalInfo(self, response, ssid):
 
@@ -166,6 +146,8 @@ class get_AWSInfo:
         
 
     def getSSIDsInRange(self): 
+
+        debug = False
         lessThanOrGreater = input('Would you like a list of ssids greater than a given time stamp (enter 1), less than a given time stamp (enter 2), or between two time stamps (enter 3)')
         
         if (lessThanOrGreater == 1 ):
@@ -188,15 +170,11 @@ class get_AWSInfo:
             )
             # 2017-06-19 06:27:50 2017-08-19 06:14:38
 
-        # nameOfFile = env+'_'
-        # completeName = os.path.join(d.directory, nameOfFile)
-        # f= open(completeName,"w+")
-
-        #print response['Items']
+    
         for ssid in response['Items']:  # we have to specify that we are looking through the ['Items'] key in response because response
                                          # also has a ['Count'], ['LastEvaluatedKey'], ['ScannedCount'] key ... etc response['Items'] is a 
                                          # a list of all the ssids that match the filter 
-            print "ssid: "+ssid['ssid'] +", sessionCreateTs: "+ssid['sessionCreateTs']
+            if (debug): print "ssid: "+ssid['ssid'] +", sessionCreateTs: "+ssid['sessionCreateTs']
             #print '\n'
 
     def choice1(self, ssids):
