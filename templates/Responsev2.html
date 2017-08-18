@@ -30,21 +30,17 @@
 
   <div class="section">
     <div class="container-5 w-container">
-        <h1 class="heading-2 mod-1">PA Session Analyzer</h1>
-          
+        <h1 class="heading-2 mod-1">PA Session Analyzer</h1>       
     </div>
-      <hr>
+    <hr>
+
     <div class="row-2 w-row">
 
       <div class="column-5 w-col w-col-6">
-        <!--<div class="div-block-3 w-clearfix"><img class="image-2 w-hidden-small w-hidden-tiny" data-ix="slow-fall" sizes="(max-width: 767px) 100vw, (max-width: 991px) 48vw, 40vw" src="./Powering Forward _ CCC_files/IMG_Left.png" srcset="images/IMG_Left-p-500.png 500w, images/IMG_Left.png 615w" alt="" style="opacity: 1; transform: translateX(0px) translateY(20px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
-            <h1 class="heading-1 mod-1">Something Else</h1>
-          <p class="paragraph">The fuck did I do.</p>
-        </div>-->
-           <div class="div-block" data-ix="slow-rise" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
-               <!-- S I ADDED -->
-          <h1 class="heading-1 mod-1">Enter you information below</h1>
-          <h3>INFO: </h3>
+      
+           <!-- <div class="div-block" data-ix="slow-rise" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
+              
+          
 
                <form action="/form/response/" method = "post">
                   
@@ -66,53 +62,71 @@
                    
                </form>
 
-               <!-- SHIT I ADDED -->
-        </div>
+               
+        </div> -->
       </div>
 
-      <div class="column-5 w-col w-col-6">
-        <div class="div-block" data-ix="slow-rise" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
-          <h1 class="heading-1 mod-1">Session Information</h1>
-          <p class="paragraph"></p>
-            <fieldset>
-                <legend>Entered SSID : </legend>
-                <p class="paragraph"><strong>{{session_list}}</strong></p>
-            </fieldset>
-
-        </div>
-        <div class="div-block" data-ix="slow-rise" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
-          <h1 class="heading-1 mod-1">Images go here plz</h1>
-          <p class="paragraph"></p>
+      <!-- <div class="section"> -->
+        
+       <!--  <div class="section" data-ix="slow-rise" style="opacity: 5; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;" -->
           
-            <div id="content">
-                Session IDs : <strong>{{session_list}}</strong> on <strong>{{environment}}</strong> User Choice: {{choice}}!
-                <br>
-                <br>
-                <br>
-                {% for ssid in session_list %}
-                    Input Images <br>
+          
+          
+        
+
+
+        <div id = "container">
+
+              <div class = "section">
+
+                  <br>
+                  Session IDs : <strong>{{session_list}}</strong> 
+                  <br>environment: <strong>{{environment}}</strong>
+                  <br>Option: <strong>{{choice}}</strong>
+                  <br>
+                  <br>
+
+                  {% for ssid in session_list %}
+
+                      <br>
+                      SSID: <strong> {{ssid}} <br> <br> </strong>
+
+
+                      {% for attr in FNOL_dict %}
+                          {{attr}} : {{FNOL_dict[attr]}}<br>
+
+                      {% endfor %}
+
+                    <strong> <br>Input Images <br> </strong>
                     {% for img in img_names %}
                         
-                        <img src ="{{ url_for('static', filename = img ) }}" alt="No Picture" height=20% width=20%>
+                        <img src ="{{ url_for('static', filename = img ) }}" alt="No Picture" height=15% width=15%>
                         
                     {% endfor %}
 
 
-                    <br> Heatmaps <br>
+                    <br> <strong> Heatmaps </strong> <br>
 
                     {% for hm in hm_img_names %}
                         
-                        <img src ="{{ url_for('static', filename = hm ) }}" alt="No Picture" height=20% width=20%>
+                        <img src ="{{ url_for('static', filename = hm ) }}" alt="No Picture" height=15% width=15%>
                         
                     {% endfor %}
+
+                    
+
+                  </div>
+
+
+
                 {% endfor %}
-            </div>
+           
 
          
         </div>
         
-      </div> <!-- here -->
-    </div>
+     <!-- here -->
+   <!--  </div> -->
   </div>
   <div class="footer"></div>
   <script src="{{ url_for('static', filename='js/jquery.min.js') }}"type="text/javascript"></script>

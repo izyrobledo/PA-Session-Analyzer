@@ -101,10 +101,19 @@ class get_AWSInfo:
         nameOfFile = ssid+'_FNOL.txt'
         completeName = os.path.join(self.d.directory, nameOfFile)
         f= open(completeName,"w+")
+        dict = {}
         attributes = ['modelYear', 'makeDesc', 'displayModel', 'trimLevel', 'odometerReading', 'ownerZip', 'primaryImpactCode', 'airbagDeployed', 'drivable', 'uploadClaims', 'sessionCreateTs', 'carrierId']
-        for attr in attributes: 
+        
+        for attr in attributes:
             f.write (attr)
             f.write (', ')
+        
+            try: 
+                dict[attr] = str(response['Items'][0][attr])
+
+            except: 
+                dict[attr] = 'NA'
+
         f.write ('estimate')
         f.write('\n')
 
@@ -117,8 +126,12 @@ class get_AWSInfo:
 
         try: 
             f.write(response['Items'][0]['estimate']['amount'])
+            dict['estimate'] = response['Items'][0]['estimate']['amount']
         except:
+            dict['estimate'] = 'NA'
             f.write('NA')
+
+        return dict
 
 
     def defineEnvironments(self):
@@ -145,28 +158,29 @@ class get_AWSInfo:
             # e288209058f052fb268e31432e1ceb8b 4d5553375cf049a3295a769b3681facf df29e781b15bb6fa45c875cebf487387
         
 
-    def getSSIDsInRange(self): 
+    def getSSIDsInRange(self, lessThanOrGreater, timeStamps, table): 
 
         debug = False
-        lessThanOrGreater = input('Would you like a list of ssids greater than a given time stamp (enter 1), less than a given time stamp (enter 2), or between two time stamps (enter 3)')
-        
-        if (lessThanOrGreater == 1 ):
-            timeStamp = raw_input('Please enter the time stamp cut off you would like to use, you will get all the ssids in this environment with a sessionCreateTs greater than the one entered: ')
+        listOfSSIDS = {}
+        if (lessThanOrGreater == u'1' ):
+            #timeStamps = raw_input('Please enter the time stamp cut off you would like to use, you will get all the ssids in this environment with a sessionCreateTs greater than the one entered: ')
             response = table.scan( # response is a list of all the thigns that satisfy the filter below
-                FilterExpression=Attr('sessionCreateTs').gt(timeStamp)
+                FilterExpression=Attr('sessionCreateTs').gt(timeStamps)
                 # 2017-06-19 06:27:50
             )
-        elif (lessThanOrGreater == 2):
-            timeStamp = raw_input('Please enter the time stamp cut off you would like to use, you will get all the ssids in this environment with a sessionCreateTs less than the one entered: ')
+        elif (lessThanOrGreater == u'2'):
+            #timeStamps = raw_input('Please enter the time stamp cut off you would like to use, you will get all the ssids in this environment with a sessionCreateTs less than the one entered: ')
             response = table.scan( # response is a list of all the thigns that satisfy the filter below
-                FilterExpression=Attr('sessionCreateTs').lt(timeStamp)
+                FilterExpression=Attr('sessionCreateTs').lt(timeStamps)
                 # 2017-08-19 06:14:38
             )
-        elif (lessThanOrGreater == 3):
-            timeStamps = raw_input('Please enter the two time stamps you would like to use, you will get all the ssids that have a sessionCreateTs between these times (seperated by a space_: ')
-            timeStampList = timeStamps.split()
+        elif (lessThanOrGreater == u'3'):
+            #timeStamps = raw_input('Please enter the two time stamps you would like to use, you will get all the ssids that have a sessionCreateTs between these times (seperated by a space_: ')
+            timeStampList = timeStamps.split(", ")
+            print '1: '+ timeStampList[0]
+            print '2: ' + timeStampList[1]
             response = table.scan(
-                FilterExpression = Attr('sessionCreateTs').between(timeStampList[0]+timeStampList[1], timeStampList[2]+timeStampList[3])
+                FilterExpression = Attr('sessionCreateTs').between(timeStampList[0], timeStampList[1])
             )
             # 2017-06-19 06:27:50 2017-08-19 06:14:38
 
@@ -175,11 +189,13 @@ class get_AWSInfo:
                                          # also has a ['Count'], ['LastEvaluatedKey'], ['ScannedCount'] key ... etc response['Items'] is a 
                                          # a list of all the ssids that match the filter 
             if (debug): print "ssid: "+ssid['ssid'] +", sessionCreateTs: "+ssid['sessionCreateTs']
-            #print '\n'
+            listOfSSIDS[ssid['ssid']] = ssid ['sessionCreateTs']
+
+        return listOfSSIDS
 
     def choice1(self, ssids):
 
-        self.session_list = ssids.split()
+        self.session_list = ssids.split(", ")
 
         return self.session_list
  

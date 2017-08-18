@@ -39,60 +39,46 @@ def hello():
 
 @app.route("/form/response/", methods=["GET", "POST"])
 def response(): 
-    print ' goes to response'
     
-    environment = request.form['env']
-    ssids = request.form['SSID']
-    print 'got env and ssids'
     choice=request.form['userChoice']
-    print 'got choice'
-    
-    print 'this is the user choice: ' + choice
-    print type (choice)
-    if (choice == 1):
-        print 'THE PRINT STATEMENT WORKED'
-
-    #path = '/Users/isabella/Documents/pasessionanalyzer'
+    environment = request.form['env']
     path = os.getcwd()
     aws = get_AWSInfo(choice, environment, path)
-   
 
-    # global sesssion_list
-    # session_list = aws.mainMethod1(ssids)
-
-
-    session = boto3.Session(profile_name = 'default')
-       
     dynamodb = boto3.resource('dynamodb', aws.region_name)
     s3 = boto3.resource('s3')
     table = dynamodb.Table(aws.session_table)
+    if (choice == u'1'):
 
-    
+        
+        ssids = request.form['SSID']
+        session = boto3.Session(profile_name = 'default')
+        session_list = aws.choice1(ssids)     
+
+        for ssid in aws.session_list: 
+           
+            aws.d.makeDirs('/static/', aws.path, ssid)
+            response = table.query(
+                KeyConditionExpression=Key('ssid').eq(ssid)
+            )
             
-    #aws.session_list = ssids.split()
-    session_list = aws.choice1(ssids)     
+           
+            img_names = aws.accessInputImages(response, s3)
+            hm_img_names = aws.accessHeatMaps(response, s3)
+            FNOL_dict = aws.accessAdditionalInfo(response, ssid)
+        return render_template(
+            'Responsev2.html', FNOL_dict = FNOL_dict, choice=choice, environment=environment, session_list = session_list, img_names = img_names, hm_img_names = hm_img_names)
+    
+    elif (choice == u'2'):
+        environment = request.form['env']
+        lessThanOrGreater = request.form['lessThanOrGreater']
+        timeStamps = request.form['timeStamps']
 
-    for ssid in aws.session_list: 
-       
-        aws.d.makeDirs('/static/', aws.path, ssid)
-        # dynamodb = boto3.resource('dynamodb', e.region_name)
-        # s3 = boto3.resource('s3')
-        # table = dynamodb.Table(e.session_table)
-        
-        response = table.query(
-            KeyConditionExpression=Key('ssid').eq(ssid)
-        )
-        
-       
-        img_names = aws.accessInputImages(response, s3)
-        hm_img_names = aws.accessHeatMaps(response, s3)
-        aws.accessAdditionalInfo(response, ssid)
+        listOfSSIDs = aws.getSSIDsInRange(lessThanOrGreater, timeStamps, table)
 
-    #aws.d.zipEverything()
-
-    return render_template(
-        'Responsev2.html', choice=choice, environment=environment, session_list = session_list, img_names = img_names, hm_img_names = hm_img_names)
- 
+        return render_template(
+            'Response2.html', choice=choice, environment=environment, listOfSSIDs = listOfSSIDs)
+    
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=80)
     app.run()
