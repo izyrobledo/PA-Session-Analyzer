@@ -50,7 +50,9 @@ def response():
     table = dynamodb.Table(aws.session_table)
     if (choice == u'1'):
 
-        
+        img_dict = {}
+        hm_img_dict = {}
+        FNOL_dict_dict = {}
         ssids = request.form['SSID']
         session = boto3.Session(profile_name = 'default')
         session_list = aws.choice1(ssids)     
@@ -63,11 +65,11 @@ def response():
             )
             
            
-            img_names = aws.accessInputImages(response, s3)
-            hm_img_names = aws.accessHeatMaps(response, s3)
-            FNOL_dict = aws.accessAdditionalInfo(response, ssid)
-        return render_template(
-            'Responsev2.html', FNOL_dict = FNOL_dict, choice=choice, environment=environment, session_list = session_list, img_names = img_names, hm_img_names = hm_img_names)
+            img_dict[ssid] = aws.accessInputImages(response, s3)
+            hm_img_dict[ssid] = aws.accessHeatMaps(response, s3)
+            FNOL_dict_dict[ssid] = aws.accessAdditionalInfo(response, ssid)
+            return render_template(
+                'Responsev2.html', FNOL_dict_dict = FNOL_dict_dict, choice=choice, environment=environment, session_list = session_list, img_dict = img_dict, hm_img_dict = hm_img_dict)
     
     elif (choice == u'2'):
         environment = request.form['env']

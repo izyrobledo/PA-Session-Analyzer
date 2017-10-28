@@ -1,2 +1,2 @@
 modelYear, makeDesc, displayModel, trimLevel, odometerReading, ownerZip, primaryImpactCode, airbagDeployed, drivable, uploadClaims, sessionCreateTs, carrierId, estimate
-2007, Toyota, Camry, AWD, NA, 19072, NA, No, Yes, false, 2017-04-19 15:48:56, PX, NA
+2006, Hyundai, Sonata, GLS, NA, 60103, NA, No, Yes, true, 2017-09-26 15:28:28, ER, NA

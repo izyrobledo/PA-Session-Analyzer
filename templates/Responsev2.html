@@ -38,42 +38,7 @@
 
       <div class="column-5 w-col w-col-6">
       
-           <!-- <div class="div-block" data-ix="slow-rise" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;">
-              
-          
-
-               <form action="/form/response/" method = "post">
-                  
-                 
-               Would you like to get the information from one SSID ( Enter 1 ), or would you like to query an environment? ( Enter 2 )<br><br>
-                <input type="text" name="userChoice" value="1" autofocus required>
-                <br><br>
-                 Which environment would you like to work in?  ( dev, qa, or ct )
-                <br><br>
-                <input type="text" name="env" value="dev" required pattern="dev|qa|ct">
-                <br><br>
-                Which SSIDs would you like information on? Enter each SSID seperated by a space:
-                   <br><br>
-                   CT: 94d72cb494cc0c579a00a49a746701ea 
-                   <br><br>
-                <input type="text" name="SSID" required>
-                <br><br>
-                <input type="submit" value="Submit">
-                   
-               </form>
-
-               
-        </div> -->
       </div>
-
-      <!-- <div class="section"> -->
-        
-       <!--  <div class="section" data-ix="slow-rise" style="opacity: 5; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 200ms, transform 7000ms;" -->
-          
-          
-          
-        
-
 
         <div id = "container">
 
@@ -91,15 +56,16 @@
                       <br>
                       SSID: <strong> {{ssid}} <br> <br> </strong>
 
-
-                      {% for attr in FNOL_dict %}
-                          {{attr}} : {{FNOL_dict[attr]}}<br>
+                      does it get here
+                      {% for attr in FNOL_dict_dict[ssid] %}
+                         
+                          {{attr}} : {{FNOL_dict_dict[ssid][attr]}}<br>
 
                       {% endfor %}
 
                     <strong> <br>Input Images <br> </strong>
-                    {% for img in img_names %}
-                        
+               
+                    {% for img in img_dict[ssid] %}
                         <img src ="{{ url_for('static', filename = img ) }}" alt="No Picture" height=15% width=15%>
                         
                     {% endfor %}
@@ -107,19 +73,20 @@
 
                     <br> <strong> Heatmaps </strong> <br>
 
-                    {% for hm in hm_img_names %}
-                        
+                    {% for hm in hm_img_dict[ssid] %}
                         <img src ="{{ url_for('static', filename = hm ) }}" alt="No Picture" height=15% width=15%>
                         
                     {% endfor %}
 
                     
 
-                  </div>
+                  
 
 
 
                 {% endfor %}
+
+            </div>
            
 
          

@@ -1,2 +1,0 @@
-modelYear, makeDesc, displayModel, trimLevel, odometerReading, ownerZip, primaryImpactCode, airbagDeployed, drivable, uploadClaims, sessionCreateTs, carrierId, estimate
-2011, Honda, Civic-Sdn, VP, NA, 85363, NA, No, No, false, 2017-04-20 19:32:36, MIKE, NA
